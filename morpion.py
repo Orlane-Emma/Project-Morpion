@@ -5,7 +5,14 @@ import random
 def supermorpion():
     print("Bienvenue dans le Super Morpion !")
     print("Le premier joueur est : ❌") 
-    print("Le deuxième joueur est : ⭕️\n ") 
+    print("Le deuxième joueur est : ⭕️\n ")
+    game_choice = input('vous voulez jouer avec qui le pc ou le joueur 2 ?') #pc/ player2
+
+    if game_choice == 'pc':
+        jouer_supermorpion()
+    elif game_choice == 'joueur 2' :
+        supermorpion_2joueurs()
+
 
 # Fonction pour choisir un coup pour l'ordinateur (ennemi).
 def choisir_coup_ordinateur(grille):
@@ -58,11 +65,41 @@ def jouer_supermorpion():
             joueur = "O" if joueur == "X" else "X"
         else:
             print("Cette case est déjà occupée, veuillez choisir une autre case.")
+# Fonction pour lancer le tour à tour avec le joueur 2. 
+def supermorpion_2joueurs():
+    grille = [[" "]*3 for _ in range(3)]
+    print("Le premier joueur est : ❌") 
+    print("Le deuxième joueur est : ⭕️\n ")
+    joueur = "X"
+    while True:
+        afficher_grille(grille)
+        if joueur == "X":
+            print("C'est à votre tour.")
+            ligne = int(input("Saisir une ligne : ")) - 1
+            colonne = int(input("Saisir une colonne : ")) - 1
+        elif joueur == "O":
+            print("C'est à votre tour.")
+            ligne = int(input("Saisir une ligne : ")) - 1
+            colonne = int(input("Saisir une colonne : ")) - 1
+        
+        if grille[ligne][colonne] == " ":
+            grille[ligne][colonne] = joueur
+            if verifier_victoire(grille, joueur):
+                afficher_grille(grille)
+                print(f"Le joueur {joueur} a gagné !")
+                break
+            elif all(symbol != " " for ligne in grille for symbol in ligne):
+                afficher_grille(grille)
+                print("Match nul !")
+                break
+            joueur = "O" if joueur == "X" else "X"
+        else:
+            print("Cette case est déjà occupée, veuillez choisir une autre case.")
 
 # Fonction principale pour lancer le jeu.
 def main(): 
     supermorpion()
-    jouer_supermorpion()
+    #jouer_supermorpion()
 
 # Appel de la fonction principale.
 if __name__ == "__main__":
